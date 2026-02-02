@@ -3,7 +3,7 @@
 import openai 
 import streamlit as st
 
-st.set_page_config(page_title="のりぽんチャット", layout="centered") st.title("🤖 のりぽん with ChatGPT")
+st.set_page_config(page_title="norichat", layout="centered") st.title("🤖 のりぽん with ChatGPT")
 
 
 
