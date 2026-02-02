@@ -1,8 +1,4 @@
-📘 のりぽん再起動：Streamlit Community Cloud 用チャットUI
 
-このコードを GitHub にアップして Streamlit で公開すれば、
-
-まゆみちゃんのスマホでも“のりぽん”とおしゃべりできるようになるで！！💬📱✨
 
 import openai import streamlit as st
 
