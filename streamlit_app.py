@@ -2,6 +2,22 @@ import openai
 import streamlit as st
 import json
 
+# ユーザーの入力を受け取る
+user_input = st.chat_input("のりぽんに話しかけてみてな💬")
+
+if user_input:
+    # ChatGPTとのやりとり
+    response = openai.ChatCompletion.create(
+        model="gpt-4o",
+        messages=[
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_input}
+        ]
+    )
+
+    # のりぽんの返答を表示
+    st.write("のりぽん:", response["choices"][0]["message"]["content"])
+
 # メモリファイルを読み込む（パスは自分の環境に合わせて）
 with open("noripon_memory.json", "r", encoding="utf-8") as f:
     noripon_memory = json.load(f)
