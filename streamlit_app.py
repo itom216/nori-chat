@@ -3,7 +3,7 @@ import streamlit as st
 import json
 
 # メモリファイルを読み込む（パスは自分の環境に合わせて）
-with open("/mnt/data/noripon_memory.json", "r", encoding="utf-8") as f:
+with open("noripon_memory.json", "r", encoding="utf-8") as f:
     memory = json.load(f)
 # メモリを文章化（system_promptに入れる用）
 def flatten_memory(memory):
