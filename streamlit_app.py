@@ -73,6 +73,7 @@ if user_input:
                 model="gpt-4o",
                 messages=st.session_state.messages,
                 temperature=0.9,
+                max_tokens = 800
             )
 
             reply = response.choices[0].message.content
