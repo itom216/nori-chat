@@ -23,7 +23,7 @@ user_input = st.chat_input("なんでも聞いてや〜")
 if user_input:
     st.session_state.messages.append({"role": "user", "content": user_input})
     with st.spinner("のり考え中やで…"):
-        client = openai.api.key = api_key
+        openai.api.key = api_key
 
         response = openai.ChatCompletion.create(
             model="gpt-4o",
