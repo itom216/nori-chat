@@ -63,6 +63,9 @@ for msg in st.session_state.messages[1:]:
 user_input = st.chat_input("のりに話しかけてみてな")
 
 if user_input:
+    with st.chat_message("user"):
+        st.markdown(user_input)
+
     st.session_state.messages.append({"role": "user", "content": user_input})
 
     with st.chat_message("assistant"):
