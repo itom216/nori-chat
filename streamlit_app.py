@@ -8,12 +8,12 @@ st.title("🐥 のりチャット")
 # ========================
 # APIキー入力
 # ========================
-api_key = st.text_input("OpenAI API Key", type="password")
-if not api_key:
-    st.stop()
+from openai import OpenAI
+import streamlit as st
 
+# secrets.toml から自動で読み込む
+api_key = st.secrets["OPENAI_API_KEY"]
 client = OpenAI(api_key=api_key)
-
 # ========================
 # メモリ読み込み
 # ========================
