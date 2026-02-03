@@ -25,7 +25,7 @@ if user_input:
     with st.spinner("のり考え中やで…"):
         openai.api_key = api_key
 
-        response = openai.chat.completion.create(
+        response = openai.chat.completions.create(
             model="gpt-4o",
             messages=st.session_state.messages,
             temperature=0.9,
