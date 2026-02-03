@@ -12,8 +12,7 @@ from openai import OpenAI
 import streamlit as st
 
 # secrets.toml から自動で読み込む
-client = OpenAI(api_key="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
-")
+client = OpenAI(api_key="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")
 # ========================
 # メモリ読み込み
 # ========================
