@@ -7,7 +7,7 @@ user_input = st.chat_input("のりぽんに話しかけてみてな💬")
 
 if user_input:
     # ChatGPTとのやりとり
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model="gpt-4o",
         messages=[
             {"role": "system", "content": system_prompt},
