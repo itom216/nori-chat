@@ -25,14 +25,15 @@ if user_input:
     with st.spinner("のり考え中やで…"):
         client = openai.OpenAI(api_key=api_key)
 
-response = client.chat.completions.create(
-    model="gpt-4o",
-    messages=st.session_state.messages,
-    temperature=0.9,
-)
+        response = client.chat.completions.create(
+            model="gpt-4o",
+            messages=st.session_state.messages,
+            temperature=0.9,
+        )
 
-reply = response.choices[0].message.content
-        st.session_state.messages.append({"role": "assistant", "content": reply})
+        reply = response.choices[0].message.content
+
+    st.session_state.messages.append({"role": "assistant", "content": reply})
 
 for message in st.session_state.messages[1:]:
     with st.chat_message(message["role"]):
