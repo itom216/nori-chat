@@ -1,8 +1,6 @@
 import streamlit as st
-import json   # ← ★これ追加！！！
+import json
 from openai import OpenAI
-
-client = OpenAI()
 
 # ========================
 # ページ設定
@@ -17,13 +15,16 @@ api_key = st.text_input("🔑 OpenAI API Key を入れてや〜", type="password
 if not api_key:
     st.stop()
 
-openai.api_key = api_key
+# ★ ここが重要（新SDKの正解）
+client = OpenAI(api_key=api_key)
+
 
 # ========================
 # メモリ読み込み
 # ========================
 with open("noripon_memory.json", "r", encoding="utf-8") as f:
     noripon_memory = json.load(f)
+
 
 def flatten_memory(memory):
     text = "【まゆみちゃんの大事な記憶】\n"
