@@ -111,11 +111,13 @@ if user_input:
 
     with st.chat_message("assistant"):
         with st.spinner("のり考え中やで…"):
-            response = client.chat.completions.create(   # ← ★ここ変更！！！
+            messages = [
+                {"role": "system", "content": system_prompt}
+            ] + st.session_state.messages
+
+            response = client.chat.completions.create(
                 model="gpt-4o",
-                messages = [
-                    {"role": "system", "content": system_prompt}
-                ] + st.session_state.messages
+                messages=messages,
                 temperature=1.0,
                 max_tokens=4000
             )
