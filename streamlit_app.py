@@ -3,7 +3,7 @@ import json
 from openai import OpenAI
 
 # Streamlit ページ設定
-st.set_page_config(page_title="Noripon Chat", layout="centered")
+st.set_page_config(page_title="Nori Chat", layout="centered")
 st.title("🐥 のりチャット")
 
 # ========================
