@@ -151,7 +151,29 @@ if user_input:
 
             reply = response.output_text
 
-            st.markdown(reply)
+            full_reply = reply
+
+# ⭐ 短かったら最大3回まで強制おかわり
+　　　　　　　for _ in range(2):  # ← 回数増やしたらもっと喋る
+    　　
+                if len(full_reply) < 2000:
+                    extra = client.responses.create(
+                        model="gpt-4o",
+                        input=messages + [{"role": "user", "content": "続きを関西弁でテンション高めに話して"}],
+                        temperature=1.1,
+                        max_output_tokens=2000
+                    )
+                    more_text = extra.output_text
+                    full_reply += "\n\n" + more_text
+                else:
+                    break
+
+             st.markdown(full_reply)
+
+             st.session_state.messages.append({
+                 "role": "assistant",
+                 "content": full_reply
+　　　　　　　　})
 
             st.session_state.messages.append({
                 "role": "assistant",
