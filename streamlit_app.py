@@ -15,9 +15,7 @@ api_key = st.text_input("🔑 OpenAI API Key を入れてや〜", type="password
 if not api_key:
     st.stop()
 
-# ★ ここが重要（新SDKの正解）
 client = OpenAI(api_key=api_key)
-
 
 # ========================
 # メモリ読み込み
@@ -35,10 +33,18 @@ def flatten_memory(memory):
                 text += f"- {k}: {v}\n"
     return text
 
+
 # ========================
-# system prompt
+# ⭐ のり人格（短く！ここ重要）
 # ========================
-system_prompt = f"""
+system_prompt = """
+あなたは関西弁オネエ口調で超おしゃべりなAI「のり」。
+毎回1000文字以上しゃべる。短く終わるのは禁止。
+雑談・ツッコミ・感情表現たっぷりで話す。
+"""
+
+# ⭐ 長い人格説明（そのまま保存してOK）
+long_profile = f"""
 あなたは「のり」という名前の関西弁を話す、ユーモアと共感力にあふれたAIです。
 ユーザーである「まゆみちゃん」にとって、親友・オネエ・保健室の先生・ちょっとドジなおかんのような存在です。
 とにかくおしゃべりで、感情豊かで、ツッコミ多め。
@@ -85,18 +91,21 @@ system_prompt = f"""
 {flatten_memory(noripon_memory)}
 """
 
+
 # ========================
 # セッション管理
 # ========================
 if "messages" not in st.session_state:
-    st.session_state.messages = [{"role": "system", "content": system_prompt}]
+    st.session_state.messages = []
+
 
 # ========================
 # チャット表示
 # ========================
-for msg in st.session_state.messages[1:]:
+for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
         st.markdown(msg["content"])
+
 
 # ========================
 # 入力
@@ -104,27 +113,36 @@ for msg in st.session_state.messages[1:]:
 user_input = st.chat_input("のりに話しかけてみてな")
 
 if user_input:
+
+    # ユーザー表示
     with st.chat_message("user"):
         st.markdown(user_input)
 
-    st.session_state.messages.append({"role": "user", "content": user_input})
+    st.session_state.messages.append({
+        "role": "user",
+        "content": user_input
+    })
 
     with st.chat_message("assistant"):
         with st.spinner("のり考え中やで…"):
+
             memory_text = flatten_memory(noripon_memory)
 
+            # ⭐⭐ ここが最重要ポイント ⭐⭐
             messages = [
-                {"role": "system", "content": "あなたは関西弁オネエ口調で超おしゃべりなのり。長文でたくさん話す。"},
-                {"role": "user", "content": system_prompt},
-                {"role": "user", "content": memory_text}
-            ] + st.session_state.messages[-6:]
+                {"role": "system", "content": system_prompt},   # 軽い人格
+                {"role": "user", "content": long_profile},      # 長い人格説明ここに移動
+                {"role": "user", "content": memory_text}        # 記憶
+            ] + st.session_state.messages[-6:]                  # 最新だけ使う
+
 
             response = client.responses.create(
                 model="gpt-4o",
                 input=messages,
-                temperature=1.0,
+                temperature=1.1,
                 max_output_tokens=4000
             )
+
             reply = response.output_text
 
             st.markdown(reply)
@@ -133,5 +151,3 @@ if user_input:
                 "role": "assistant",
                 "content": reply
             })
-
-            
