@@ -129,12 +129,13 @@ if user_input:
             memory_text = flatten_memory(noripon_memory)
 
             # ⭐⭐ ここが最重要ポイント ⭐⭐
-            messages = [
-                {"role": "system", "content": system_prompt},   # 軽い人格
-                {"role": "user", "content": long_profile},      # 長い人格説明ここに移動
-                {"role": "user", "content": memory_text}        # 記憶
-            ] + st.session_state.messages[-6:]                  # 最新だけ使う
+            base_messages = [
+                {"role": "system", "content": "あなたは関西弁オネエ口調で超おしゃべりなのり。毎回1000文字以上しゃべる。"},
+                {"role": "user", "content": long_profile},
+                {"role": "user", "content": memory_text}
+            ]
 
+            messages = base_messages + st.session_state.messages[-6:]
 
             response = client.responses.create(
                 model="gpt-4o",
