@@ -112,8 +112,13 @@ if user_input:
                 messages=st.session_state.messages,
                 temperature=0.9,
             )
+            reply = response.choices[0].message.content
 
-            reply = response["choices"][0]["message"]["content"]
             st.markdown(reply)
 
-    st.session_state.messages.append({"role": "assistant", "content": reply})
+            st.session_state.messages.append({
+                "role": "assistant",
+                "content": reply
+            })
+
+            
