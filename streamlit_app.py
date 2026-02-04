@@ -1,6 +1,8 @@
 import streamlit as st
-import json
-import openai   # ← ★これ追加！！！
+import json   # ← ★これ追加！！！
+from openai import OpenAI
+
+client = OpenAI()
 
 # ========================
 # ページ設定
@@ -104,7 +106,7 @@ if user_input:
 
     with st.chat_message("assistant"):
         with st.spinner("のり考え中やで…"):
-            response = openai.ChatCompletion.create(   # ← ★ここ変更！！！
+            response = client.chat.completions.create(   # ← ★ここ変更！！！
                 model="gpt-4o",
                 messages=st.session_state.messages,
                 temperature=0.9,
