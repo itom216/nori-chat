@@ -12,8 +12,7 @@ st.title("🐥 のりチャット")
 api_key = st.text_input("🔑 OpenAI API Key を入れてや〜", type="password")
 if not api_key:
     st.stop()
-
-client = OpenAI(api_key=api_key)
+openai.api_key = api_key
 
 # ========================
 # メモリ読み込み
@@ -67,7 +66,7 @@ if user_input:
 
     with st.chat_message("assistant"):
         with st.spinner("のり考え中やで…"):
-            response = client.chat.completions.create(
+            response = client.ChatCompletion.create(
                 model="gpt-4o",
                 messages=st.session_state.messages,
                 temperature=0.9,
