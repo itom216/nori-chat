@@ -150,11 +150,10 @@ if user_input:
             )
 
             reply = response.output_text
-            
-            st.markdown(full_reply)
-            reply = response.output_text
+
+            st.markdown(reply)
+
             st.session_state.messages.append({
                 "role": "assistant",
-                "content": full_reply
+                "content": reply
             })
-            
