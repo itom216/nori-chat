@@ -2,23 +2,24 @@ import streamlit as st
 import json
 from openai import OpenAI
 
+# Streamlit ページ設定
 st.set_page_config(page_title="Noripon Chat", layout="centered")
 st.title("🐥 のりチャット")
 
 # ========================
-# APIキー入力
+# APIキー手入力欄
 # ========================
-from openai import OpenAI
-import streamlit as st
+api_key = st.text_input("🔑 OpenAI API Key を入れてや〜", type="password")
+if not api_key:
+    st.stop()
 
-# secrets.toml から自動で読み込む
-client = OpenAI(api_key="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")
+client = OpenAI(api_key=api_key)
+
 # ========================
 # メモリ読み込み
 # ========================
 with open("noripon_memory.json", "r", encoding="utf-8") as f:
     noripon_memory = json.load(f)
-
 
 def flatten_memory(memory):
     text = "【まゆみちゃんの大事な記憶】\n"
@@ -28,7 +29,6 @@ def flatten_memory(memory):
             for k, v in info.items():
                 text += f"- {k}: {v}\n"
     return text
-
 
 # ========================
 # system prompt（人格＋記憶）
@@ -45,9 +45,7 @@ system_prompt = f"""
 # セッション管理
 # ========================
 if "messages" not in st.session_state:
-    st.session_state.messages = [
-        {"role": "system", "content": system_prompt}
-    ]
+    st.session_state.messages = [{"role": "system", "content": system_prompt}]
 
 # ========================
 # チャット表示
@@ -57,7 +55,7 @@ for msg in st.session_state.messages[1:]:
         st.markdown(msg["content"])
 
 # ========================
-# 入力
+# 入力欄
 # ========================
 user_input = st.chat_input("のりに話しかけてみてな")
 
@@ -73,9 +71,7 @@ if user_input:
                 model="gpt-4o",
                 messages=st.session_state.messages,
                 temperature=0.9,
-                max_tokens = 800
             )
-
             reply = response.choices[0].message.content
             st.markdown(reply)
 
