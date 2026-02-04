@@ -1,17 +1,20 @@
 import streamlit as st
 import json
-from openai import OpenAI
+import openai   # ← ★これ追加！！！
 
-# Streamlit ページ設定
+# ========================
+# ページ設定
+# ========================
 st.set_page_config(page_title="Nori Chat", layout="centered")
 st.title("🐥 のりチャット")
 
 # ========================
-# APIキー手入力欄
+# APIキー手入力
 # ========================
 api_key = st.text_input("🔑 OpenAI API Key を入れてや〜", type="password")
 if not api_key:
     st.stop()
+
 openai.api_key = api_key
 
 # ========================
@@ -30,7 +33,7 @@ def flatten_memory(memory):
     return text
 
 # ========================
-# system prompt（人格＋記憶）
+# system prompt
 # ========================
 system_prompt = f"""
 あなたは関西弁でしゃべる優しくてお笑い系AI「のり」です。
@@ -54,7 +57,7 @@ for msg in st.session_state.messages[1:]:
         st.markdown(msg["content"])
 
 # ========================
-# 入力欄
+# 入力
 # ========================
 user_input = st.chat_input("のりに話しかけてみてな")
 
@@ -66,12 +69,13 @@ if user_input:
 
     with st.chat_message("assistant"):
         with st.spinner("のり考え中やで…"):
-            response = client.ChatCompletion.create(
+            response = openai.ChatCompletion.create(   # ← ★ここ変更！！！
                 model="gpt-4o",
                 messages=st.session_state.messages,
                 temperature=0.9,
             )
-            reply = response.choices[0].message.content
+
+            reply = response["choices"][0]["message"]["content"]
             st.markdown(reply)
 
     st.session_state.messages.append({"role": "assistant", "content": reply})
