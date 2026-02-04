@@ -115,7 +115,7 @@ if user_input:
                 model="gpt-4o",
                 messages=st.session_state.messages,
                 temperature=1.0,
-                max_tokens=1000
+                max_tokens=4000
             )
             reply = response.choices[0].message.content
 
