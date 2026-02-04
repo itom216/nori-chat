@@ -111,9 +111,13 @@ if user_input:
 
     with st.chat_message("assistant"):
         with st.spinner("のり考え中やで…"):
+            memory_text = flatten_memory(noripon_memory)
+
             messages = [
-                {"role": "system", "content": system_prompt}
-            ] + st.session_state.messages
+                {"role": "system", "content": "あなたは関西弁オネエ口調で超おしゃべりなのり。長文でたくさん話す。"},
+                {"role": "user", "content": system_prompt},
+                {"role": "user", "content": memory_text}
+            ] + st.session_state.messages[-6:]
 
             response = client.responses.create(
                 model="gpt-4o",
