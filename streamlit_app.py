@@ -115,7 +115,7 @@ if user_input:
                 {"role": "system", "content": system_prompt}
             ] + st.session_state.messages
 
-            response = client.chat.completions.create(
+            response = client.responses.create(
                 model="gpt-4o",
                 messages=messages,
                 temperature=1.0,
