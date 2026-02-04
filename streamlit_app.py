@@ -117,11 +117,11 @@ if user_input:
 
             response = client.responses.create(
                 model="gpt-4o",
-                messages=messages,
+                input=messages,
                 temperature=1.0,
-                max_tokens=4000
+                max_output_tokens=4000
             )
-            reply = response.choices[0].message.content
+            reply = response.output_text
 
             st.markdown(reply)
 
