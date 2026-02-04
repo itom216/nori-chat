@@ -154,7 +154,7 @@ if user_input:
             full_reply = reply
 
 # ⭐ 短かったら最大3回まで強制おかわり
-　　　　　    for _ in range(2):  # ← 回数増やしたらもっと喋る　
+            for _ in range(2):  # ← 回数増やしたらもっと喋る　
                 if len(full_reply) < 2000:
                     extra = client.responses.create(
                         model="gpt-4o",
