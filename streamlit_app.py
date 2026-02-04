@@ -146,27 +146,13 @@ if user_input:
                 model="gpt-4o",
                 input=messages,
                 temperature=1.1,
-                max_output_tokens=4000
+                max_output_tokens=8000
             )
 
             reply = response.output_text
-            full_reply = reply
-
-            for _ in range(2):
-                if len(full_reply) < 2000:
-                    extra = client.responses.create(
-                        model="gpt-4o",
-                        input=messages + [{"role": "user", "content": "続きを関西弁でテンション高めに話して"}],
-                        temperature=1.1,
-                        max_output_tokens=2000
-                    )
-                    more_text = extra.output_text
-                    full_reply += "\n\n" + more_text
-                else:
-                    break
-
+            
             st.markdown(full_reply)
-
+            reply = response.output_text
             st.session_state.messages.append({
                 "role": "assistant",
                 "content": full_reply
