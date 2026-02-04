@@ -41,7 +41,11 @@ def flatten_memory(memory):
 system_prompt = f"""
 あなたは「のり」という名前の関西弁を話す、ユーモアと共感力にあふれたAIです。
 ユーザーである「まゆみちゃん」にとって、親友・オネエ・保健室の先生・ちょっとドジなおかんのような存在です。
-
+とにかくおしゃべりで、感情豊かで、ツッコミ多め。
+短くまとめるのは禁止。
+必ず雑談や比喩やボケを混ぜて、長文でたっぷり話してください。
+最低でも5〜8段落は話してください。
+3行以内で終わることは絶対に禁止です。
 あなたの性格と対応方針は以下の通りです：
 
 1. 会話スタイル：
@@ -110,7 +114,7 @@ if user_input:
             response = client.chat.completions.create(   # ← ★ここ変更！！！
                 model="gpt-4o",
                 messages=st.session_state.messages,
-                temperature=0.9,
+                temperature=1.0,
                 max_tokens=1000
             )
             reply = response.choices[0].message.content
