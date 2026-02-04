@@ -150,11 +150,9 @@ if user_input:
             )
 
             reply = response.output_text
-
             full_reply = reply
 
-# ⭐ 短かったら最大3回まで強制おかわり
-            for _ in range(2):  # ← 回数増やしたらもっと喋る　
+            for _ in range(2):
                 if len(full_reply) < 2000:
                     extra = client.responses.create(
                         model="gpt-4o",
@@ -167,11 +165,10 @@ if user_input:
                 else:
                     break
 
-             st.markdown(full_reply)
+            st.markdown(full_reply)
 
-             st.session_state.messages.append({
-                 "role": "assistant",
-                 "content": full_reply
-　　　　　　　　})
-
+            st.session_state.messages.append({
+                "role": "assistant",
+                "content": full_reply
+            })
             
